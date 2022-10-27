@@ -1,0 +1,58 @@
+<!DOCTYPE html> 
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <script src="../js/json_02.js" defer></script>
+  <title>犬の写真を表示</title>
+</head>
+    <body style="text-align:center">
+        <input type="number" id="numOfImg" placeholder="枚数" max="50" min="1">
+        <button id='button'>犬の写真を表示</button>
+        <h3>写真</h3>
+        <div id="target"></div>
+    <script>
+
+        class DogPhoto {
+
+            constructor(message, status) {
+                this.message = message; // 配列
+                this.status = status; // string
+            }
+            
+            renderImg() {
+                let container = document.createElement("div");
+                for(let i=0; i<this.message.length; i++) {
+                    let img = document.createElement("img");
+                    img.src = this.message[i];
+                    container.append(img);
+                }
+                target.append(container);    
+            }
+
+        }
+    
+        const button = document.getElementById('button');
+        const type = document.getElementById('type');
+        const target = document.getElementById('target');
+
+    
+    
+        button.addEventListener('click', () => {
+            const numOfImg = parseInt(document.getElementById('numOfImg').value);
+            fetch(`https://dog.ceo/api/breed/hound/images/random/${numOfImg}`)
+            .then(response => {
+                return response.json();
+            })
+            .then(data => {
+                console.log(data.status)
+                let dogPhotos = new DogPhoto(data.message, data.status);
+                dogPhotos.renderImg();
+            })
+            .catch(error => {
+                console.log(error)
+            });
+        });
+
+    </script>
+    </body>
+</html>
