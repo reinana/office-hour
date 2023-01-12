@@ -116,15 +116,15 @@ function slideJump(input){
 
     let nextElemnt = playerList[input];
 
-    //main.setAttribute("data-index",input);
+    // main.setAttribute("data-index",input);
 
     let animationType = index < input ? "right" : "left";
     console.log(index) // ここがずっと0
 
-    animationMain(currentElement,nextElemnt,animationType); //括弧の位置修正
+    animationMain(currentElement,nextElemnt,animationType, input); //括弧の位置修正
 }
 
-function animationMain(currentElement,nextElemnt,animationType){
+function animationMain(currentElement,nextElemnt,animationType, input){
     // console.log(currentElement)
     // console.log(nextElemnt)
     mainImg.src = nextElemnt.img;
@@ -136,8 +136,12 @@ function animationMain(currentElement,nextElemnt,animationType){
 
     if(animationType === "right"){
         console.log(sliderShow)
-        // sliderShow.innerHTML = "";
-        sliderShow.append(mainImg);
+       if(playerImg.src == defaultImg) {
+            extraImg.src = defaultImg
+            playerImg.src = ""
+        }
+        mainImg.setAttribute("data-index", input)
+            sliderShow.append(mainImg);
         sliderShow.append(extraImg);
         leftDiv.append(sliderShow) // sliderShowをappendしてないから表示されない ただ、data-indexを更新していないのでずっとmainは同じ人。data-indexは0のままなので必ずright
         console.log(playerImg)
