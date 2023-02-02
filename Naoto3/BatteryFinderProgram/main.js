@@ -205,7 +205,6 @@ class View{
         step1Select.append(option1);
         step1Div.append(step1P);
         step1Div.append(step1Select);
-        console.log(step1Div)
         
 
         //step2
@@ -240,9 +239,10 @@ class View{
         let step4P = document.createElement("p");
         step4P.innerHTML = "Step4: Choose your battery";
         let step4DivSecond = document.createElement("div");
-        step4Div.setAttribute("id","batteryList");
+        step4DivSecond.setAttribute("id","batteryList");
         step4Div.append(step4P); 
         step4Div.append(step4DivSecond);   
+        console.log(step4Div)
 
         //sum
         stepDiv.append(step1Div,step2Div,step3Div,step4Div);
@@ -283,7 +283,8 @@ class View{
             `;
         }
 
-        for(let i=0; i<selectBatteryList; i++){
+        for(let i=0; i<selectBatteryList.length; i++){
+            console.log("koko")
             batteryListString +=
             `
             <div class="d-flex justify-content-between border border-secondary col-11 row">
@@ -297,6 +298,7 @@ class View{
             `
         }
         document.getElementById("batteryList").innerHTML = batteryListString;
+        console.log(document.getElementById("batteryList"))
     }
 
     static getModelOption(){
