@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!--bootstrap-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+<!-- ここからHTMLを記述してください。 -->
+<div class="bg-dark">
+    <!--スタート画面-->
+    <div id="startPage">
+        <div class="d-flex justify-content-center align-items-center vh-100">
+            <div class="bg-white text-center p-4">
+                <h2 class="pb-3">Clicker Empire Game</h2>
+                <form id="playerInfo">
+                    <div class="form-row pb-3">
+                        <div class="col">
+                            <input type="text" class="form-control" placeholder="Your name" name="playerName" value="naoto" required>
+                        </div>
+                    </div>
+                </form>
+                <div class="d-flex jusitfy-content-between">
+                    <div class="col-6 pl-0">
+                        <button type="submit" class="btn btn-primary col-12" id="newBtn" onclick="newGame()">New</button>
+                    </div>
+                    <div class="col-6 pr-0">
+                        <button type="submit" class="btn btn-primary col-12" id="loginBtn" onclick="loginGame()">Login</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--メインページ--->
+    <div id="mainPage">
+    </div>
+</div>
+<script src="main.js"></script>
+</body>
+</html>
