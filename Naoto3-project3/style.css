@@ -1,0 +1,25 @@
+/* ここからCSSを記述してください。 */
+.bg-blue{
+    background-color: #33CCFF;
+}
+
+.bg-silver{
+    background-color:#C0C0C0;
+}
+
+.playerInfoBorder{
+    border: 0.25rem solid #343a40;
+}
+
+@media (min-width:600px){
+    .flowHeight{
+        height: 75%!important;
+    }
+}
+
+.hover {
+    cursor: pointer;
+}
+.hover:hover {
+    opacity: 0.7;
+}
