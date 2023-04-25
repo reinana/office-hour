@@ -20,6 +20,7 @@ class Player{
         }
         else if(item == this.items[1]){
             this.money += (1.001 * item.howManyPurchased * item.price);
+            console.log(this.money)
         }
         else if (item == this.items[2]){
             this.money += (1.007 * item.howManyPurchased * item.price);
@@ -35,7 +36,6 @@ class Player{
             item.price *= 1.1;
         }
     }
-
 }
 
 class Item{
@@ -49,21 +49,6 @@ class Item{
         this.type = type;
     }
 }
-
-//select "New game" or "Load game" 
-/*
-function selectGameType(){
-    let newBtn = config.startPage.querySelectorAll("#newBtn")[0]
-    newBtn.addEventListener("click",function(){
-        newGame();
-    });
-
-    let loginBtn = config.startPage.querySelectorAll("#loginBtn")[0]
-    loginBtn.addEventListener("click",function(){
-        loginGame();
-    });
-}
-*/
 
 //if you push "New"
 function newGame(){
@@ -87,8 +72,10 @@ function loginGame(){
         alert("セーブデータがありません");
         return false;
     }
-    let playerAccount = JSON.parse(localStorage.getItem(playerName));
-    // ★★★ playerAccountには名前しか入ってないデータが保存されてない ★★★
+    //★★★ let playerAccount = JSON.parse(localStorage.getItem(playerName)); 
+    // localStorageのデータをJSONにしてるのでそれをクラスに戻してあげないといけない
+    let json = JSON.parse(localStorage.getItem(playerName));
+    let playerAccount = Object.assign(new Player(), json)
     console.log(playerAccount)
     startGame(playerAccount);
 }
@@ -96,17 +83,17 @@ function loginGame(){
 //create new player
 function createNewPlayer(playerName){
     let items = [
-        new Item("Flip machine","https://cdn.pixabay.com/photo/2019/06/30/20/09/grill-4308709_960_720.png",15000,500, 0,25,"ability"),
-            new Item("ETF Stock","https://cdn.pixabay.com/photo/2016/03/31/20/51/chart-1296049_960_720.png", 300000,-1, 0,0.1,"investment"),
-            new Item("ETF Bonds","https://cdn.pixabay.com/photo/2016/03/31/20/51/chart-1296049_960_720.png",300000,-1, 0, 0.07,"investment"),
-            new Item("Lemonade Stand","https://cdn.pixabay.com/photo/2012/04/15/20/36/juice-35236_960_720.png",30000,1000,0, 30,"realState"),
-            new Item("Ice Cream Truck","https://cdn.pixabay.com/photo/2020/01/30/12/37/ice-cream-4805333_960_720.png", 100000,500,0,120,"realState"),
-            new Item("House","https://cdn.pixabay.com/photo/2016/03/31/18/42/home-1294564_960_720.png",20000000,100,0, 32000,"realState"),
-            new Item("TownHouse","https://cdn.pixabay.com/photo/2019/06/15/22/30/modern-house-4276598_960_720.png",40000000,100,0,64000,"realState"),
-            new Item("Mansion","https://cdn.pixabay.com/photo/2017/10/30/20/52/condominium-2903520_960_720.png", 250000000,20,0,500000,"realState"),
-            new Item("Industrial Space","https://cdn.pixabay.com/photo/2012/05/07/17/35/factory-48781_960_720.png",1000000000,10,0,2200000,"realState"),
-            new Item("Hotel Skyscraper","https://cdn.pixabay.com/photo/2012/05/07/18/03/skyscrapers-48853_960_720.png",10000000000,5,0,25000000,"realState"),
-            new Item("Bullet-Speed Sky Railway","https://cdn.pixabay.com/photo/2013/07/13/10/21/train-157027_960_720.png",10000000000000,1,0,30000000000,"realState")   
+        new Item("Flip machine","https://cdn.pixabay.com/photo/2019/06/30/20/09/grill-4308709_960_720.png",15000,150, 0,25,"ability"),
+        new Item("ETF Stock","https://cdn.pixabay.com/photo/2016/03/31/20/51/chart-1296049_960_720.png", 300000,Infinity, 0,0.1,"investment"),
+        new Item("ETF Bonds","https://cdn.pixabay.com/photo/2016/03/31/20/51/chart-1296049_960_720.png",300000,Infinity, 0, 0.07,"investment"),
+        new Item("Lemonade Stand","https://cdn.pixabay.com/photo/2012/04/15/20/36/juice-35236_960_720.png",30000,1000,0, 30,"realState"),
+        new Item("Ice Cream Truck","https://cdn.pixabay.com/photo/2020/01/30/12/37/ice-cream-4805333_960_720.png", 100000,500,0,120,"realState"),
+        new Item("House","https://cdn.pixabay.com/photo/2016/03/31/18/42/home-1294564_960_720.png",20000000,100,0, 32000,"realState"),
+        new Item("TownHouse","https://cdn.pixabay.com/photo/2019/06/15/22/30/modern-house-4276598_960_720.png",40000000,100,0,64000,"realState"),
+        new Item("Mansion","https://cdn.pixabay.com/photo/2017/10/30/20/52/condominium-2903520_960_720.png", 250000000,20,0,500000,"realState"),
+        new Item("Industrial Space","https://cdn.pixabay.com/photo/2012/05/07/17/35/factory-48781_960_720.png",1000000000,10,0,2200000,"realState"),
+        new Item("Hotel Skyscraper","https://cdn.pixabay.com/photo/2012/05/07/18/03/skyscrapers-48853_960_720.png",10000000000,5,0,25000000,"realState"),
+        new Item("Bullet-Speed Sky Railway","https://cdn.pixabay.com/photo/2013/07/13/10/21/train-157027_960_720.png",10000000000000,1,0,30000000000,"realState")   
     ];
     let player = new Player(playerName,20,1,50000,items,0);
     return player;
@@ -118,6 +105,7 @@ function startGame(playerAccount){
     config.startPage.querySelectorAll(`input[name="playerName"]`)[0].value = null;
     config.mainPage.append(createMainPage(playerAccount))
     startTimer(playerAccount);
+    console.log(playerAccount)
 }
 
 //start timer
@@ -130,7 +118,12 @@ function startTimer(playerAccount){
         playerAccount.age ++;
         config.mainPage.querySelectorAll("#age")[0].innerHTML = "";
         config.mainPage.querySelectorAll("#age")[0].innerHTML = playerAccount.age + " years old";
-    }
+        }
+        for (let i=1;i<playerAccount.items.length;i++){
+            playerAccount.money += playerAccount.items[i].howManyPurchased * playerAccount.items[i].makeMoney;
+            config.mainPage.querySelectorAll("#money")[0].innerHTML = "";
+            config.mainPage.querySelectorAll("#money")[0].innerHTML = "￥" + Math.floor(playerAccount.money);
+        }        
     },1000);
 }
 
@@ -147,7 +140,7 @@ function createMainPage(playerAccount){
                     <h5>one click ￥${(playerAccount.items[0].howManyPurchased+ 1)*25}</h5>
                 </div>
                 <div class="p-2 pt-5 d-flex justify-content-center">
-                    <img id="bugerImg" width=70% src="https://cdn.pixabay.com/photo/2014/04/02/17/00/burger-307648_960_720.png" class="img-fuid hover">
+                    <img id="bugerImg" width=70% src="./img/burger.png" class="img-fuid hover">
                 </div>
             </div>
 
@@ -164,7 +157,7 @@ function createMainPage(playerAccount){
                             <h5 id="days">${playerAccount.days} days</h5>
                         </div>
                         <div class="bg-blue text-white text-center col-12 col-sm-6 playerInfoBorder">
-                            <h5 id="totalMoney">￥${playerAccount.money}</h5>
+                            <h5 id="money">￥${playerAccount.money}</h5>
                         </div>
                     </div> 
                 </div>
@@ -193,9 +186,10 @@ function createMainPage(playerAccount){
         playerAccount.click ++;
         container.querySelectorAll("#amountBurger")[0].innerHTML = playerAccount.click + " Burgers";
         //increase player's money
+        console.log(playerAccount.money)
         playerAccount.increaseMoney(playerAccount.items[0]);
-        container.querySelectorAll("#totalMoney")[0].innerHTML = "";
-        container.querySelectorAll("#totalMoney")[0].innerHTML = "￥" + playerAccount.money;
+        container.querySelectorAll("#money")[0].innerHTML = "";
+        container.querySelectorAll("#money")[0].innerHTML = "￥" + playerAccount.money;
     })
 
     //if you click "Save" button
@@ -219,16 +213,13 @@ function createMainPage(playerAccount){
 //save game
 function saveGame(playerAccount){
     let playerName = playerAccount.name;
-    // let jsonPlayerName = JSON.stringify(playerName);
-    // ★★★ jsonPlayerName？？名前じゃなくてデータを保存するべき
-    // ★★★ playerAccount全体をJSONで保存 ★★★
-    let jsonPlayerName = JSON.stringify(playerAccount);
-    localStorage.setItem(playerName,jsonPlayerName);
-    alert("セーブしました");
-    console.log(jsonPlayerName)
-    clearInterval(playerAccount.timer);
-    config.mainPage.innerHTML = "";
-    config.startPage.classList.remove("d-none");
+    let jsonPlayerData = JSON.stringify(playerAccount);
+    localStorage.setItem(playerName,jsonPlayerData);
+    if(window.confirm("セーブして、ゲームを止めますか？")){
+        clearInterval(playerAccount.timer);
+        config.mainPage.innerHTML = "";
+        config.startPage.classList.remove("d-none");
+    }
 }
 
 //reset game
@@ -250,7 +241,6 @@ function backHomeGame(playerAccount){
         config.mainPage.innerHTML = "";
         config.startPage.classList.remove("d-none");
     }
-
 }
 
 //create item part
@@ -270,7 +260,7 @@ function createItemsPart(playerAccount){
                     <h4>${playerAccount.items[i].howManyPurchased}</h4>
                 </div>
                 <div class="d-flex justify-content-between">
-                    <p>￥${playerAccount.items[i].price}</p>
+                    <p>￥${Math.floor(playerAccount.items[i].price)}</p>
                     <p class="text-success">￥${playerAccount.items[i].makeMoney} ${itemsTypeSelect(playerAccount.items[i].type)}</p>
                 </div>
             </div>
@@ -312,7 +302,7 @@ function createPurchasePart(playerAccount,index){
         </div>
         <div>
             <p>How many ould you like to buy?</p>
-            <input type="number" placeholder="0" class="col-12 form-control">
+            <input type="number" placeholder="Please input number" class="col-12 form-control" min=1 id="amountOfItem">
             <p class="text-right" id="howMuch">total: ￥0</p>
         </div>
         <div class="d-flex justify-content-between pb-3">
@@ -320,25 +310,50 @@ function createPurchasePart(playerAccount,index){
             <button class="btn btn-primary col-5" id="purchaseBtn">Purchase</buttone>
         </div>
     </div>
-    `
-    let goBackBtn = container.querySelectorAll("#goBackBtn")[0];
+    `    
+    //check total money
+    container.querySelectorAll("#amountOfItem")[0].addEventListener("input",function(){
+        let totalAmount = playerAccount.items[index].price * container.querySelectorAll("#amountOfItem")[0].value;
+        container.querySelectorAll("#howMuch")[0].innerHTML = "";
+        container.querySelectorAll("#howMuch")[0].innerHTML = "total: ￥" + totalAmount;
+    })
+
     //if you click "Co back" button
+    let goBackBtn = container.querySelectorAll("#goBackBtn")[0];
     goBackBtn.addEventListener("click",function(){
         config.mainPage.querySelectorAll("#itemsList")[0].innerHTML = "";
         config.mainPage.querySelectorAll("#itemsList")[0].append(createItemsPart(playerAccount))
     })
 
-    let purchaseBtn = container.querySelectorAll("#purchaseBtn")[0];
     //if you click "Purchase" button
+    let purchaseBtn = container.querySelectorAll("#purchaseBtn")[0];
     purchaseBtn.addEventListener("click",function(){
-        config.mainPage.querySelectorAll("#itemsList")[0].innerHTML = "";
-        config.mainPage.querySelectorAll("#itemsList")[0].append(createItemsPart(playerAccount));
-    })
+        let amountOfItem = container.querySelectorAll("#amountOfItem")[0].value;
+        let totalAmount = amountOfItem * playerAccount.items[index].price;
+        if(amountOfItem <= 0){
+            alert("アイテムの購入数は1以上です")
+        }
+        else if(totalAmount > playerAccount.money){
+            alert("所持金が不足しています")
+        }
+        else if(playerAccount.items[index].howManyPurchased + amountOfItem > playerAccount.items[index].maxPurchase){
+            alert("これ以上このアイテムを購入することはできません")
+
+        }
+        else{
+            for(let i = 1; i <= amountOfItem; i++){
+                console.log(playerAccount.name)
+                playerAccount.purchaseItem(playerAccount.items[index]);
+            }
+        }
+        config.mainPage.innerHTML = "";
+        config.mainPage.append(createMainPage(playerAccount))
+    });
     return container;
 }
 
 //show ∞
 function selectMaxPurchase(maxPurchase){
-    if(maxPurchase == -1) return "∞";
+    if(maxPurchase == "Infinity") return "∞";
     else return maxPurchase;
 }
